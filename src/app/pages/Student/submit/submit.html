@@ -1,0 +1,151 @@
+<div class="max-w-2xl mx-auto">
+
+  <div *ngIf="loading" class="flex justify-center py-16">
+    <mat-spinner diameter="40"></mat-spinner>
+  </div>
+
+  <div *ngIf="!loading">
+
+    <!-- Back button -->
+    <button (click)="goBack()" class="flex items-center gap-2 text-gray-400 hover:text-white mb-6 transition-colors">
+      <mat-icon>arrow_back</mat-icon>
+      <span class="text-sm">Back to Assignments</span>
+    </button>
+
+    <!-- Already submitted -->
+    <div *ngIf="alreadySubmitted"
+         class="bg-green-500/10 border border-green-500/30 rounded-2xl p-8 text-center">
+      <mat-icon style="font-size:48px; width:48px; height:48px; color:#4ade80;">check_circle</mat-icon>
+      <h3 class="text-white font-bold text-xl mb-2 mt-3">Already Submitted!</h3>
+      <p class="text-gray-400">You have already submitted this assignment.</p>
+      <button mat-raised-button (click)="goBack()"
+        style="background:#4f46e5; color:white; border-radius:10px; margin-top:16px;">
+        View Assignments
+      </button>
+    </div>
+
+    <!-- Submit form -->
+    <div *ngIf="!alreadySubmitted">
+
+      <!-- Assignment info -->
+      <div *ngIf="assignment" class="bg-gray-900 rounded-2xl border border-gray-800 p-6 mb-6">
+        <h2 class="text-white font-bold text-xl mb-1">{{ assignment.title }}</h2>
+
+        <div class="flex items-center gap-4 text-xs text-gray-500 flex-wrap mb-4">
+          <span class="flex items-center gap-1">
+            <mat-icon class="text-sm">calendar_today</mat-icon>
+            Due: {{ assignment.dueDate | date:'mediumDate' }}
+          </span>
+          <span class="flex items-center gap-1">
+            <mat-icon class="text-sm">stars</mat-icon>
+            {{ assignment.totalMarks }} marks
+          </span>
+          <span class="flex items-center gap-1">
+            <mat-icon class="text-sm">person</mat-icon>
+            {{ assignment.instructorName }}
+          </span>
+        </div>
+
+          <!-- Non-PDF file (DOC, ZIP, etc) -->
+          <div *ngIf="!isPDF(assignment.fileURL)"
+               class="flex items-center gap-3 p-4 rounded-xl border border-gray-700 bg-gray-800">
+            <mat-icon style="color:#4f46e5; font-size:32px; width:32px; height:32px;">insert_drive_file</mat-icon>
+            <div class="flex-1">
+              <p class="text-white text-sm font-medium">{{ assignment.fileName }}</p>
+              <p class="text-gray-500 text-xs">Click download to view the file</p>
+            </div>
+            <a [href]="assignment.fileURL" target="_blank" download
+               class="flex items-center gap-1 text-indigo-400 hover:text-indigo-300 text-sm transition-colors">
+              <mat-icon class="text-sm">download</mat-icon>
+              Download
+            </a>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Submit Form -->
+      <div class="bg-gray-900 rounded-2xl border border-gray-800 p-6">
+        <h3 class="text-white font-semibold mb-4">Submit Your Work</h3>
+
+        <form [formGroup]="form" novalidate>
+
+          <!-- File Upload Zone -->
+          <div class="w-full mb-4">
+            <label class="block text-sm font-medium text-gray-300 mb-2">Upload Your Submission</label>
+
+            <div
+              class="border-2 border-dashed border-gray-700 rounded-xl p-6 text-center cursor-pointer transition-all duration-200 hover:border-indigo-500 hover:bg-indigo-500/5"
+              [class.border-indigo-500]="selectedFile"
+              [class.bg-indigo-500/5]="selectedFile"
+              (click)="fileInput.click()"
+              (dragover)="$event.preventDefault()"
+              (drop)="onFileDrop($event)">
+
+              <input #fileInput type="file" class="hidden"
+                accept=".pdf,.doc,.docx,.zip,.txt,.ppt,.pptx"
+                (change)="onFileSelected($event)" />
+
+              <!-- No file selected -->
+              <ng-container *ngIf="!selectedFile">
+                <div class="flex flex-col items-center gap-2">
+                  <mat-icon style="font-size:40px; width:40px; height:40px; color:#4f46e5;">cloud_upload</mat-icon>
+                  <p class="text-gray-300 font-medium">Drag & drop or <span class="text-indigo-400 underline">browse</span></p>
+                  <p class="text-gray-500 text-xs">Supported: PDF, DOC, DOCX, ZIP, TXT, PPT, PPTX (Max 10MB)</p>
+                </div>
+              </ng-container>
+
+              <!-- File selected -->
+              <ng-container *ngIf="selectedFile">
+                <div class="flex items-center justify-center gap-3">
+                  <mat-icon style="color:#4f46e5;">insert_drive_file</mat-icon>
+                  <div class="text-left">
+                    <p class="text-white text-sm font-medium">{{ selectedFile.name }}</p>
+                    <p class="text-gray-400 text-xs">{{ (selectedFile.size / 1024 / 1024).toFixed(2) }} MB</p>
+                  </div>
+                  <button type="button" (click)="removeFile($event)"
+                    class="ml-4 text-gray-500 hover:text-red-400 transition-colors">
+                    <mat-icon>close</mat-icon>
+                  </button>
+                </div>
+              </ng-container>
+
+            </div>
+
+            <!-- File error -->
+            <p *ngIf="fileError" class="text-red-400 text-xs mt-1">{{ fileError }}</p>
+          </div>
+
+          <!-- Upload Progress -->
+          <div *ngIf="uploadProgress > 0 && uploadProgress < 100" class="mb-4">
+            <div class="flex justify-between text-xs text-gray-400 mb-1">
+              <span>Uploading to Cloudinary...</span>
+              <span>{{ uploadProgress }}%</span>
+            </div>
+            <div class="w-full bg-gray-700 rounded-full h-2">
+              <div class="bg-indigo-500 h-2 rounded-full transition-all duration-300"
+                [style.width.%]="uploadProgress">
+              </div>
+            </div>
+          </div>
+
+          <!-- Error / Success -->
+          <div *ngIf="error"
+               class="mb-4 p-3 rounded-lg bg-red-500/10 border border-red-500/30 text-red-400 text-sm">
+            {{ error }}
+          </div>
+          <div *ngIf="success"
+               class="mb-4 p-3 rounded-lg bg-green-500/10 border border-green-500/30 text-green-400 text-sm">
+            {{ success }}
+          </div>
+
+          <button mat-raised-button type="button" (click)="submit()" [disabled]="submitting"
+            style="background:#4f46e5; color:white; border-radius:10px; padding:10px 32px; font-weight:600;">
+            <mat-spinner *ngIf="submitting" diameter="18" style="display:inline-block; margin-right:8px;"></mat-spinner>
+            {{ submitting ? 'Submitting...' : 'Submit Assignment' }}
+          </button>
+
+        </form>
+      </div>
+    </div>
+  </div>

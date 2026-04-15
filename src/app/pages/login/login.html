@@ -1,0 +1,66 @@
+<div class="min-h-screen bg-gray-950 flex items-center justify-center px-4">
+  <div class="w-full max-w-md bg-gray-900 rounded-2xl p-8 border border-gray-800 shadow-2xl">
+
+    <h1 class="text-3xl font-bold text-indigo-400 text-center mb-1">Assignify</h1>
+    <p class="text-gray-400 text-sm text-center mb-8">Sign in to your account</p>
+
+    <form [formGroup]="form" novalidate>
+
+      <!-- Role -->
+      <p class="text-xs text-gray-400 uppercase tracking-widest font-semibold mb-2">I am a...</p>
+      <div class="grid grid-cols-3 gap-2 mb-5">
+        <button type="button" *ngFor="let r of roles" (click)="pickRole(r.value)"
+          [class]="form.get('role')?.value === r.value
+            ? 'flex flex-col items-center gap-1 py-3 rounded-xl border-2 border-indigo-500 bg-indigo-500/10 text-indigo-400'
+            : 'flex flex-col items-center gap-1 py-3 rounded-xl border border-gray-700 bg-gray-800 text-gray-400 hover:border-gray-500'">
+          <mat-icon>{{ r.icon }}</mat-icon>
+          <span class="text-xs font-semibold">{{ r.label }}</span>
+        </button>
+      </div>
+      <p *ngIf="form.get('role')?.invalid && form.get('role')?.touched"
+         class="text-red-400 text-xs mb-3">Please select your role.</p>
+
+      <!-- Email -->
+      <mat-form-field appearance="outline" class="w-full mb-1">
+        <mat-label>Email</mat-label>
+        <input matInput type="email" formControlName="email" placeholder="you@example.com" />
+        <mat-error *ngIf="form.get('email')?.hasError('required')">Email required.</mat-error>
+        <mat-error *ngIf="form.get('email')?.hasError('email')">Enter valid email.</mat-error>
+      </mat-form-field>
+
+      <!-- Password -->
+      <mat-form-field appearance="outline" class="w-full mb-5">
+        <mat-label>Password</mat-label>
+        <input matInput [type]="showPw ? 'text' : 'password'" formControlName="password" />
+        <button mat-icon-button matSuffix type="button" (click)="showPw = !showPw">
+          <mat-icon>{{ showPw ? 'visibility_off' : 'visibility' }}</mat-icon>
+        </button>
+        <mat-error *ngIf="form.get('password')?.hasError('required')">Password required.</mat-error>
+        <mat-error *ngIf="form.get('password')?.hasError('minlength')">Min 6 characters.</mat-error>
+      </mat-form-field>
+
+      <!-- Error -->
+      <div *ngIf="error" class="mb-4 p-3 rounded-lg bg-red-500/10 border border-red-500/30 text-red-400 text-sm">
+        {{ error }}
+      </div>
+
+      <!-- ✅ type="button" + (click) fix -->
+      <button
+        mat-raised-button
+        type="button"
+        (click)="submit()"
+        [disabled]="loading"
+        style="width:100%; padding:12px; background:#4f46e5; color:white; border-radius:12px; font-size:15px; font-weight:600;">
+        <mat-spinner *ngIf="loading" diameter="18" style="display:inline-block; margin-right:8px;"></mat-spinner>
+        {{ loading ? 'Signing in...' : 'Sign In' }}
+      </button>
+
+    </form>
+
+    <p class="text-center text-sm text-gray-400 mt-6">
+      Don't have an account?
+      <a routerLink="/register" class="text-indigo-400 hover:underline ml-1 cursor-pointer">Register</a>
+    </p>
+
+  </div>
+</div>

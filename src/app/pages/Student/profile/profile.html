@@ -1,0 +1,40 @@
+<div class="max-w-xl mx-auto">
+      <div class="mb-6">
+        <h2 class="text-2xl font-bold text-white">My Profile</h2>
+        <p class="text-gray-400 text-sm mt-1">Your account details</p>
+      </div>
+      <div class="bg-gray-900 rounded-2xl border border-gray-800 p-8">
+        <div class="flex items-center gap-5 mb-8">
+          <div class="w-20 h-20 rounded-full bg-indigo-600 flex items-center justify-center text-white text-3xl font-bold shrink-0">
+            {{ profile?.name?.charAt(0)?.toUpperCase() }}
+          </div>
+          <div>
+            <h3 class="text-white font-bold text-xl">{{ profile?.name }}</h3>
+            <p class="text-indigo-400 text-sm capitalize">{{ profile?.role }}</p>
+          </div>
+        </div>
+        <div class="space-y-4">
+          <div class="flex items-center gap-3 p-4 bg-gray-800 rounded-xl">
+            <mat-icon class="text-gray-400">email</mat-icon>
+            <div>
+              <p class="text-gray-500 text-xs">Email</p>
+              <p class="text-white text-sm">{{ profile?.email }}</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-3 p-4 bg-gray-800 rounded-xl">
+            <mat-icon class="text-gray-400">badge</mat-icon>
+            <div>
+              <p class="text-gray-500 text-xs">User ID</p>
+              <p class="text-white text-sm font-mono">{{ profile?.uid }}</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-3 p-4 bg-gray-800 rounded-xl">
+            <mat-icon class="text-gray-400">calendar_today</mat-icon>
+            <div>
+              <p class="text-gray-500 text-xs">Member Since</p>
+              <p class="text-white text-sm">{{ profile?.createdAt | date:'mediumDate' }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>

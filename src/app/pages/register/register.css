@@ -1,0 +1,83 @@
+::ng-deep input {
+  color: white !important;
+}
+
+/* Same styling as login */
+
+.page-wrapper {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #e6ecf3;
+  padding: 20px;
+}
+
+.flip-container {
+  perspective: 1200px;
+  width: 100%;
+  max-width: 400px;
+}
+
+.flip-card {
+  transition: transform 0.8s ease;
+  transform-style: preserve-3d;
+}
+
+.neu-card {
+  padding: 40px 30px;
+  border-radius: 25px;
+  background: #e6ecf3;
+  box-shadow: 
+    12px 12px 25px rgba(163, 177, 198, 0.6),
+    -12px -12px 25px rgba(255, 255, 255, 0.9);
+}
+
+.title {
+  text-align: center;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.subtitle {
+  text-align: center;
+  font-size: 14px;
+  margin-bottom: 25px;
+  color: #777;
+}
+
+.full-width {
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+.btn {
+  margin-top: 10px;
+  padding: 10px 0;
+  border-radius: 12px;
+}
+
+.switch-text {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 14px;
+}
+
+.switch-text span {
+  color: #e91e63;
+  cursor: pointer;
+  font-weight: 500;
+  transition: 0.3s;
+}
+
+.switch-text span:hover {
+  opacity: 0.7;
+}
+
+@media (max-width: 480px) {
+  .neu-card {
+    padding: 30px 20px;
+    border-radius: 20px;
+  }
+}
+

@@ -1,0 +1,111 @@
+<div>
+  <div class="mb-6">
+    <h2 class="text-2xl font-bold text-white">Pending Students</h2>
+    <p class="text-gray-400 text-sm mt-1">Students who haven't submitted yet</p>
+  </div>
+
+  <!-- Page loading -->
+  <div *ngIf="loading" class="flex justify-center py-16">
+    <mat-spinner diameter="40"></mat-spinner>
+  </div>
+
+  <div *ngIf="!loading" class="grid md:grid-cols-2 gap-6">
+
+    <!-- ── Assignment list ─────────────────────────────────── -->
+    <div>
+      <h3 class="text-gray-400 text-xs uppercase tracking-widest font-semibold mb-3">
+        Select Assignment
+      </h3>
+
+      <div *ngIf="assignments.length === 0"
+           class="bg-gray-900 rounded-2xl border border-gray-800 p-8 text-center">
+        <mat-icon class="text-gray-600" style="font-size:40px;">assignment</mat-icon>
+        <p class="text-gray-400 text-sm mt-2">No assignments yet.</p>
+      </div>
+
+      <div class="flex flex-col gap-2">
+        <div *ngFor="let a of assignments"
+             (click)="selectAssignment(a)"
+             [ngStyle]="{
+               'padding': '16px',
+               'border-radius': '12px',
+               'cursor': 'pointer',
+               'border': selectedAssignment?.id === a.id ? '2px solid #7c3aed' : '1px solid #1f2937',
+               'background': selectedAssignment?.id === a.id ? 'rgba(124,58,237,0.1)' : '#111827'
+             }">
+
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-white font-medium text-sm">{{ a.title }}</p>
+              <p class="text-gray-500 text-xs mt-1">Due: {{ a.dueDate | date:'mediumDate' }}</p>
+            </div>
+            <span *ngIf="selectedAssignment?.id === a.id && pendingStudents.length > 0"
+              style="background:rgba(234,179,8,0.15); color:#facc15; padding:3px 10px; border-radius:20px; font-size:11px; font-weight:600;">
+              {{ pendingStudents.length }} pending
+            </span>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Pending students ────────────────────────────────── -->
+    <div>
+      <h3 class="text-gray-400 text-xs uppercase tracking-widest font-semibold mb-3">
+        Pending Students
+        <span *ngIf="selectedAssignment && !loadingStudents"
+          style="color:#facc15; margin-left:6px;">
+          ({{ pendingStudents.length }})
+        </span>
+      </h3>
+
+      <!-- No assignment selected -->
+      <div *ngIf="!selectedAssignment"
+           style="background:#111827; border:1px solid #1f2937; border-radius:16px; padding:32px; text-align:center;">
+        <mat-icon style="font-size:40px; color:#4b5563;">touch_app</mat-icon>
+        <p class="text-gray-400 text-sm mt-2">Select an assignment to see pending students</p>
+      </div>
+
+      <!-- Loading students -->
+      <div *ngIf="selectedAssignment && loadingStudents" class="flex justify-center py-8">
+        <mat-spinner diameter="32"></mat-spinner>
+      </div>
+
+      <!-- All submitted -->
+      <div *ngIf="selectedAssignment && !loadingStudents && pendingStudents.length === 0"
+           style="background:#111827; border:1px solid #1f2937; border-radius:16px; padding:32px; text-align:center;">
+        <mat-icon style="font-size:40px; color:#22c55e;">check_circle</mat-icon>
+        <p style="color:#4ade80; font-weight:600; font-size:14px; margin-top:8px;">All students submitted!</p>
+        <p style="color:#6b7280; font-size:12px; margin-top:4px;">{{ selectedAssignment.title }}</p>
+      </div>
+
+      <!-- Pending students list -->
+      <div *ngIf="selectedAssignment && !loadingStudents && pendingStudents.length > 0"
+           class="flex flex-col gap-2">
+
+        <div *ngFor="let s of pendingStudents"
+             style="display:flex; align-items:center; gap:12px; padding:16px; background:#111827; border:1px solid #1f2937; border-radius:12px;">
+
+          <!-- Avatar -->
+          <div style="width:36px; height:36px; border-radius:50%; background:rgba(234,179,8,0.15); display:flex; align-items:center; justify-content:center; color:#facc15; font-weight:700; font-size:15px; flex-shrink:0;">
+            {{ s.name?.charAt(0)?.toUpperCase() || '?' }}
+          </div>
+
+          <!-- Name & Email -->
+          <div style="flex:1; min-width:0;">
+            <p style="color:white; font-size:14px; font-weight:500; margin:0;">{{ s.name || 'Unknown' }}</p>
+            <p style="color:#6b7280; font-size:12px; margin:2px 0 0 0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">{{ s.email || 'No email' }}</p>
+          </div>
+
+          <!-- Pending badge -->
+          <span style="background:rgba(234,179,8,0.15); color:#facc15; padding:3px 12px; border-radius:20px; font-size:11px; font-weight:600; white-space:nowrap; flex-shrink:0;">
+            Pending
+          </span>
+
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</div>

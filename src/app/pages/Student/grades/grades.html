@@ -1,0 +1,24 @@
+<div>
+    <div class="mb-6">
+        <h2 class="text-2xl font-bold text-white">Grades</h2>
+        <p class="text-gray-400 text-sm mt-1">Your graded assignments</p>
+      </div>
+      <div *ngIf="loading" class="flex justify-center py-16"><mat-spinner diameter="40"></mat-spinner></div>
+      <div *ngIf="!loading && grades.length === 0" class="bg-gray-900 rounded-2xl border border-gray-800 p-12 text-center">
+        <mat-icon class="text-5xl text-gray-600 mb-3">grade</mat-icon>
+        <p class="text-gray-400">No graded assignments yet.</p>
+      </div>
+      <div *ngIf="!loading" class="grid gap-4">
+        <div *ngFor="let g of grades" class="bg-gray-900 rounded-2xl border border-gray-800 p-5 flex items-center justify-between gap-4">
+          <div>
+            <h3 class="text-white font-semibold">{{ g.assignment?.title ?? 'Assignment' }}</h3>
+            <p class="text-gray-500 text-xs mt-1">{{ g.submittedAt | date:'mediumDate' }}</p>
+            <p *ngIf="g.feedback" class="text-indigo-300 text-sm mt-1">{{ g.feedback }}</p>
+          </div>
+          <div class="text-center shrink-0">
+            <p class="text-3xl font-bold text-white">{{ g.grade }}</p>
+            <p class="text-gray-500 text-xs">/ {{ g.assignment?.totalMarks ?? '?' }}</p>
+          </div>
+        </div>
+      </div>
+    </div>

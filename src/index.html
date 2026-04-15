@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Project</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <style>
+
+    #app-splash {
+      position: fixed;
+      inset: 0;
+      background: #030712;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 24px;
+      z-index: 9999;
+      transition: opacity 0.4s ease, visibility 0.4s ease;
+    }
+
+    #app-splash.hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    /* Logo box */
+    .splash-logo {
+      width: 72px;
+      height: 72px;
+      background: #4f46e5;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 40px rgba(79, 70, 229, 0.4);
+    }
+
+    .splash-logo span {
+      font-family: 'Material Icons';
+      font-size: 36px;
+      color: white;
+    }
+
+    /* App name */
+    .splash-title {
+      font-family: 'Roboto', sans-serif;
+      font-size: 28px;
+      font-weight: 700;
+      color: white;
+      letter-spacing: -0.5px;
+    }
+
+    /* Spinner */
+    .splash-spinner {
+      width: 36px;
+      height: 36px;
+      border: 3px solid rgba(79, 70, 229, 0.2);
+      border-top-color: #4f46e5;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body class="bg-gray-950">
+
+  <!-- ✅ Splash screen shown until Angular loads -->
+  <div id="app-splash">
+    <div class="splash-logo">
+      <span class="material-icons">assignment</span>
+    </div>
+    <p class="splash-title">Assignify</p>
+    <div class="splash-spinner"></div>
+  </div>
+
+  <app-root></app-root>
+
+  <script>
+    // ✅ Hide splash once Angular has fully loaded
+    window.addEventListener('load', () => {
+      const splash = document.getElementById('app-splash');
+      // Wait a little for Angular to bootstrap
+      setTimeout(() => {
+        if (splash) {
+          splash.classList.add('hidden');
+          setTimeout(() => splash.remove(), 400); // remove after fade
+        }
+      }, 1500);
+    });
+  </script>
+
+</body>
+</html>

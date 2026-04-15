@@ -1,0 +1,87 @@
+<div *ngIf="loading" class="flex items-center justify-center h-64">
+  <mat-spinner diameter="40"></mat-spinner>
+</div>
+
+<div *ngIf="!loading">
+
+  <!-- Welcome -->
+  <div class="mb-6">
+    <h2 class="text-2xl font-bold text-white">Welcome back, {{ userName }} 👋</h2>
+    <p class="text-gray-400 mt-1 text-sm">Here's your assignment overview</p>
+  </div>
+
+  <!-- Stat Cards -->
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+
+    <div class="bg-gray-900 rounded-2xl p-5 border border-gray-800">
+      <div class="flex items-center gap-3 mb-3">
+        <div class="w-10 h-10 rounded-xl bg-indigo-500/20 flex items-center justify-center">
+          <mat-icon class="text-indigo-400">assignment</mat-icon>
+        </div>
+        <span class="text-gray-400 text-sm">Total</span>
+      </div>
+      <p class="text-3xl font-bold text-white">{{ totalAssignments }}</p>
+      <p class="text-gray-500 text-xs mt-1">Assignments</p>
+    </div>
+
+    <div class="bg-gray-900 rounded-2xl p-5 border border-gray-800">
+      <div class="flex items-center gap-3 mb-3">
+        <div class="w-10 h-10 rounded-xl bg-green-500/20 flex items-center justify-center">
+          <mat-icon class="text-green-400">task_alt</mat-icon>
+        </div>
+        <span class="text-gray-400 text-sm">Submitted</span>
+      </div>
+      <p class="text-3xl font-bold text-white">{{ submitted }}</p>
+      <p class="text-gray-500 text-xs mt-1">By you</p>
+    </div>
+
+    <div class="bg-gray-900 rounded-2xl p-5 border border-gray-800">
+      <div class="flex items-center gap-3 mb-3">
+        <div class="w-10 h-10 rounded-xl bg-yellow-500/20 flex items-center justify-center">
+          <mat-icon class="text-yellow-400">pending</mat-icon>
+        </div>
+        <span class="text-gray-400 text-sm">Pending</span>
+      </div>
+      <p class="text-3xl font-bold text-white">{{ pending }}</p>
+      <p class="text-gray-500 text-xs mt-1">Not submitted</p>
+    </div>
+
+    <div class="bg-gray-900 rounded-2xl p-5 border border-gray-800">
+      <div class="flex items-center gap-3 mb-3">
+        <div class="w-10 h-10 rounded-xl bg-purple-500/20 flex items-center justify-center">
+          <mat-icon class="text-purple-400">grade</mat-icon>
+        </div>
+        <span class="text-gray-400 text-sm">Graded</span>
+      </div>
+      <p class="text-3xl font-bold text-white">{{ graded }}</p>
+      <p class="text-gray-500 text-xs mt-1">With feedback</p>
+    </div>
+
+  </div>
+
+  <!-- Recent Assignments -->
+  <div class="bg-gray-900 rounded-2xl border border-gray-800 overflow-hidden">
+    <div class="px-6 py-4 border-b border-gray-800 flex items-center justify-between">
+      <h3 class="text-white font-semibold">Recent Assignments</h3>
+      <a [routerLink]="['../assignments']" class="text-indigo-400 text-sm hover:underline">View all</a>
+    </div>
+
+    <div *ngIf="recentAssignments.length === 0" class="px-6 py-10 text-center">
+      <mat-icon class="text-gray-600 text-5xl mb-3">assignment</mat-icon>
+      <p class="text-gray-400">No assignments yet</p>
+    </div>
+
+    <div *ngFor="let a of recentAssignments; let last = last"
+         [class]="!last ? 'px-6 py-4 border-b border-gray-800 flex items-center justify-between hover:bg-gray-800/50 transition-colors'
+                        : 'px-6 py-4 flex items-center justify-between hover:bg-gray-800/50 transition-colors'">
+      <div>
+        <p class="text-white font-medium">{{ a.title }}</p>
+        <p class="text-gray-400 text-xs mt-0.5">Due: {{ a.dueDate | date:'mediumDate' }}</p>
+      </div>
+      <span class="text-xs px-3 py-1 rounded-full bg-indigo-500/20 text-indigo-400 font-medium">
+        {{ a.totalMarks }} marks
+      </span>
+    </div>
+  </div>
+
+</div>
