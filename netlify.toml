@@ -1,0 +1,9 @@
+[build]
+  command = "npm install --legacy-peer-deps && ng build --configuration production"
+  publish = "dist/project/browser"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+  

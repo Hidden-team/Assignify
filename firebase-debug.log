@@ -1,0 +1,59 @@
+[debug] [2026-04-15T23:41:10.522Z] ----------------------------------------------------------------------
+[debug] [2026-04-15T23:41:10.544Z] Command:       C:\nvm4w\nodejs\node.exe C:\Users\Bhaylu\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js init
+[debug] [2026-04-15T23:41:10.545Z] CLI Version:   15.8.0
+[debug] [2026-04-15T23:41:10.546Z] Platform:      win32
+[debug] [2026-04-15T23:41:10.546Z] Node Version:  v22.14.0
+[debug] [2026-04-15T23:41:10.547Z] Time:          Thu Apr 16 2026 05:11:10 GMT+0530 (India Standard Time)
+[debug] [2026-04-15T23:41:10.548Z] ----------------------------------------------------------------------
+[debug] 
+[info] 
+     ######## #### ########  ######## ########     ###     ######  ########
+     ##        ##  ##     ## ##       ##     ##  ##   ##  ##       ##
+     ######    ##  ########  ######   ########  #########  ######  ######
+     ##        ##  ##    ##  ##       ##     ## ##     ##       ## ##
+     ##       #### ##     ## ######## ########  ##     ##  ######  ########
+
+You're about to initialize a Firebase project in this directory:
+
+  C:\Users\Bhaylu\Desktop\Project\Project
+
+[info] 
+=== Project Setup
+[info] 
+[info] First, let's associate this project directory with a Firebase project.
+[info] You can create multiple project aliases by running firebase use --add, 
+[info] 
+[debug] [2026-04-15T23:41:26.019Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-04-15T23:41:26.020Z] > authorizing via signed-in user (patelsamarth209@gmail.com)
+[debug] [2026-04-15T23:41:26.023Z] Checked if tokens are valid: true, expires at: 1776298081980
+[debug] [2026-04-15T23:41:26.024Z] Checked if tokens are valid: true, expires at: 1776298081980
+[debug] [2026-04-15T23:41:26.026Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/assignify2-f172d [none]
+[debug] [2026-04-15T23:41:26.910Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/assignify2-f172d 200
+[debug] [2026-04-15T23:41:26.910Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/assignify2-f172d {"projectId":"assignify2-f172d","projectNumber":"280585126342","displayName":"Assignify2","name":"projects/assignify2-f172d","resources":{"hostingSite":"assignify2-f172d","realtimeDatabaseInstance":"assignify2-f172d-default-rtdb"},"state":"ACTIVE","etag":"1_6af1abe0-4d18-4897-9d93-38d4f71615d4"}
+[info] i  Using project assignify2-f172d (Assignify2) . 
+[info] 
+=== Firestore Setup
+[info] i  firestore: ensuring required API firestore.googleapis.com is enabled... 
+[debug] [2026-04-15T23:41:26.938Z] Checked if tokens are valid: true, expires at: 1776298081980
+[debug] [2026-04-15T23:41:26.938Z] Checked if tokens are valid: true, expires at: 1776298081980
+[debug] [2026-04-15T23:41:26.939Z] >>> [apiv2][query] GET https://firestore.googleapis.com/v1/projects/assignify2-f172d/databases [none]
+[debug] [2026-04-15T23:41:27.678Z] <<< [apiv2][status] GET https://firestore.googleapis.com/v1/projects/assignify2-f172d/databases 200
+[debug] [2026-04-15T23:41:27.678Z] <<< [apiv2][body] GET https://firestore.googleapis.com/v1/projects/assignify2-f172d/databases {"databases":[{"name":"projects/assignify2-f172d/databases/(default)","uid":"d92a1ffc-b2d7-46d1-846d-89100754061c","createTime":"2026-02-20T09:12:16.189755Z","updateTime":"2026-02-20T09:12:16.189755Z","locationId":"nam5","type":"FIRESTORE_NATIVE","concurrencyMode":"PESSIMISTIC","versionRetentionPeriod":"3600s","earliestVersionTime":"2026-04-15T22:41:27.130904Z","appEngineIntegrationMode":"DISABLED","keyPrefix":"s","pointInTimeRecoveryEnablement":"POINT_IN_TIME_RECOVERY_DISABLED","deleteProtectionState":"DELETE_PROTECTION_DISABLED","databaseEdition":"STANDARD","freeTier":true,"realtimeUpdatesMode":"REALTIME_UPDATES_MODE_ENABLED","etag":"IJH/8YiE8ZMDMJ2+wqyph5MD"}]}
+[info] 
+[info] Firestore Security Rules allow you to define how and when to allow
+[info] requests. You can keep these rules in your project directory
+[info] and publish them with firebase deploy.
+[info] 
+[debug] [2026-04-15T23:41:37.118Z] ExitPromptError: User force closed the prompt with SIGINT
+    at Interface.sigint (C:\Users\Bhaylu\AppData\Roaming\npm\node_modules\firebase-tools\node_modules\@inquirer\core\dist\commonjs\lib\create-prompt.js:101:37)
+    at Interface.emit (node:events:518:28)
+    at [_ttyWrite] [as _ttyWrite] (node:internal/readline/interface:1124:18)
+    at ReadStream.onkeypress (node:internal/readline/interface:263:20)
+    at ReadStream.emit (node:events:530:35)
+    at emitKeys (node:internal/readline/utils:370:14)
+    at emitKeys.next (<anonymous>)
+    at ReadStream.onData (node:internal/readline/emitKeypressEvents:64:36)
+    at ReadStream.emit (node:events:518:28)
+    at addChunk (node:internal/streams/readable:561:12)
+[error] 
+[error] Error: An unexpected error has occurred.
