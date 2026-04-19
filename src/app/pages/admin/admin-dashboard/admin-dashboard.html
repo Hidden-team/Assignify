@@ -1,0 +1,93 @@
+<div *ngIf="loading" class="flex items-center justify-center h-64">
+  <mat-spinner diameter="40"></mat-spinner>
+</div>
+
+<div *ngIf="!loading">
+
+  <!-- Welcome -->
+  <div class="mb-6">
+    <h2 class="text-2xl font-bold text-white">Welcome, {{ userName }} 👋</h2>
+    <p class="text-gray-400 mt-1 text-sm">Here's your platform overview</p>
+  </div>
+
+  <!-- Stat Cards -->
+  <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-8">
+
+    <div class="bg-gray-900 rounded-2xl p-5 border border-gray-800">
+      <div class="w-10 h-10 rounded-xl bg-blue-500/20 flex items-center justify-center mb-3">
+        <mat-icon class="text-blue-400">school</mat-icon>
+      </div>
+      <p class="text-3xl font-bold text-white">{{ totalStudents }}</p>
+      <p class="text-gray-500 text-xs mt-1">Students</p>
+    </div>
+
+    <div class="bg-gray-900 rounded-2xl p-5 border border-gray-800">
+      <div class="w-10 h-10 rounded-xl bg-purple-500/20 flex items-center justify-center mb-3">
+        <mat-icon class="text-purple-400">person</mat-icon>
+      </div>
+      <p class="text-3xl font-bold text-white">{{ totalInstructors }}</p>
+      <p class="text-gray-500 text-xs mt-1">Instructors</p>
+    </div>
+
+    <div class="bg-gray-900 rounded-2xl p-5 border border-gray-800">
+      <div class="w-10 h-10 rounded-xl bg-indigo-500/20 flex items-center justify-center mb-3">
+        <mat-icon class="text-indigo-400">assignment</mat-icon>
+      </div>
+      <p class="text-3xl font-bold text-white">{{ totalAssignments }}</p>
+      <p class="text-gray-500 text-xs mt-1">Assignments</p>
+    </div>
+
+    <div class="bg-gray-900 rounded-2xl p-5 border border-gray-800">
+      <div class="w-10 h-10 rounded-xl bg-green-500/20 flex items-center justify-center mb-3">
+        <mat-icon class="text-green-400">task_alt</mat-icon>
+      </div>
+      <p class="text-3xl font-bold text-white">{{ totalSubmissions }}</p>
+      <p class="text-gray-500 text-xs mt-1">Submissions</p>
+    </div>
+
+    <div class="bg-gray-900 rounded-2xl p-5 border border-gray-800">
+      <div class="w-10 h-10 rounded-xl bg-yellow-500/20 flex items-center justify-center mb-3">
+        <mat-icon class="text-yellow-400">grade</mat-icon>
+      </div>
+      <p class="text-3xl font-bold text-white">{{ totalGraded }}</p>
+      <p class="text-gray-500 text-xs mt-1">Graded</p>
+    </div>
+
+    <div class="bg-gray-900 rounded-2xl p-5 border border-gray-800">
+      <div class="w-10 h-10 rounded-xl bg-red-500/20 flex items-center justify-center mb-3">
+        <mat-icon class="text-red-400">pending</mat-icon>
+      </div>
+      <p class="text-3xl font-bold text-white">{{ totalPending }}</p>
+      <p class="text-gray-500 text-xs mt-1">Pending</p>
+    </div>
+
+  </div>
+
+  <!-- Recent Users -->
+  <div class="bg-gray-900 rounded-2xl border border-gray-800 overflow-hidden mb-6">
+    <div class="px-6 py-4 border-b border-gray-800">
+      <h3 class="text-white font-semibold">Recent Users</h3>
+    </div>
+    <div *ngFor="let u of recentUsers; let last = last"
+         [class]="!last ? 'px-6 py-4 border-b border-gray-800 flex items-center justify-between'
+                        : 'px-6 py-4 flex items-center justify-between'">
+      <div class="flex items-center gap-3">
+        <div class="w-8 h-8 rounded-full bg-indigo-600 flex items-center justify-center text-white text-sm font-bold">
+          {{ u.name?.charAt(0).toUpperCase() }}
+        </div>
+        <div>
+          <p class="text-white text-sm font-medium">{{ u.name }}</p>
+          <p class="text-gray-400 text-xs">{{ u.email }}</p>
+        </div>
+      </div>
+      <span [class]="u.role === 'student'
+        ? 'text-xs px-3 py-1 rounded-full bg-blue-500/20 text-blue-400 font-medium'
+        : u.role === 'instructor'
+        ? 'text-xs px-3 py-1 rounded-full bg-purple-500/20 text-purple-400 font-medium'
+        : 'text-xs px-3 py-1 rounded-full bg-red-500/20 text-red-400 font-medium'">
+        {{ u.role }}
+      </span>
+    </div>
+  </div>
+
+</div>

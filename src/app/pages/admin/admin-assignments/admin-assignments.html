@@ -1,0 +1,70 @@
+<div>
+  <div class="mb-6">
+    <h2 class="text-2xl font-bold text-white">Assignments</h2>
+    <p class="text-gray-400 text-sm mt-1">Manage all assignments</p>
+  </div>
+
+  <!-- Search -->
+  <div class="mb-6">
+    <input
+      [(ngModel)]="search"
+      type="text"
+      placeholder="Search by title or instructor..."
+      class="w-full px-4 py-2 bg-gray-900 border border-gray-700 rounded-xl text-white text-sm placeholder-gray-500 focus:outline-none focus:border-red-500"/>
+  </div>
+
+  <!-- Loading -->
+  <div *ngIf="loading" class="flex justify-center py-16">
+    <mat-spinner diameter="40"></mat-spinner>
+  </div>
+
+  <!-- Assignments List -->
+  <div *ngIf="!loading" class="grid gap-4">
+    <div *ngIf="filtered.length === 0" class="bg-gray-900 rounded-2xl border border-gray-800 p-12 text-center">
+      <mat-icon class="text-5xl text-gray-600 mb-3">assignment</mat-icon>
+      <p class="text-gray-400">No assignments found</p>
+    </div>
+
+    <div *ngFor="let a of filtered"
+         class="bg-gray-900 rounded-2xl border border-gray-800 p-5 hover:border-red-500/30 transition-all">
+      <div class="flex items-start justify-between gap-4 flex-wrap">
+        <div class="flex-1 min-w-0">
+          <div class="flex items-center gap-2 mb-1 flex-wrap">
+            <h3 class="text-white font-semibold text-lg">{{ a.title }}</h3>
+            <span *ngIf="isPastDue(a.dueDate)"
+              style="background:rgba(239,68,68,0.15); color:#f87171; padding:2px 10px; border-radius:20px; font-size:11px; font-weight:600;">
+              Past Due
+            </span>
+            <span *ngIf="!isPastDue(a.dueDate)"
+              style="background:rgba(34,197,94,0.15); color:#4ade80; padding:2px 10px; border-radius:20px; font-size:11px; font-weight:600;">
+              Active
+            </span>
+          </div>
+          <div class="flex items-center gap-4 text-xs text-gray-500 flex-wrap mb-3">
+            <span class="flex items-center gap-1">
+              <mat-icon class="text-sm">person</mat-icon>
+              {{ a.instructorName }}
+            </span>
+            <span class="flex items-center gap-1">
+              <mat-icon class="text-sm">calendar_today</mat-icon>
+              Due: {{ a.dueDate | date:'mediumDate' }}
+            </span>
+            <span class="flex items-center gap-1">
+              <mat-icon class="text-sm">stars</mat-icon>
+              {{ a.totalMarks }} marks
+            </span>
+          </div>
+          <button *ngIf="a.fileURL" (click)="openFile(a.fileURL)"
+            class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-indigo-500/10 text-indigo-400 hover:bg-indigo-500/20 transition-all text-sm">
+            <mat-icon class="text-sm">picture_as_pdf</mat-icon>
+            {{ a.fileName || 'View PDF' }}
+          </button>
+        </div>
+        <button (click)="deleteAssignment(a.id)"
+          class="text-gray-500 hover:text-red-400 transition-colors p-2 rounded-lg hover:bg-red-500/10">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -35,6 +35,13 @@ import { InstructorUploaded } from './pages/Instructor/instructor-uploaded/instr
 import { InstructorSubmission } from './pages/Instructor/instructor-submission/instructor-submission';
 import { InstructorPending } from './pages/Instructor/instructor-pending/instructor-pending';
 
+// Admin Components 
+import { AdminLayout } from './pages/admin/admin-layout/admin-layout';
+import { AdminDashboard } from './pages/admin/admin-dashboard/admin-dashboard';
+import { AdminUsers } from './pages/admin/admin-users/admin-users';
+import { AdminAssignments } from './pages/admin/admin-assignments/admin-assignments';
+import { AdminSubmissions } from './pages/admin/admin-submissions/admin-submissions';
+
 // Firebase require Modules
 import { environment } from '../environments/environment';
 import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
@@ -44,6 +51,8 @@ import { Notifications } from './pages/Student/notifications/notifications';
 import { Grades } from './pages/Student/grades/grades';
 import { Profile } from './pages/Student/profile/profile';
 import { AuthService } from './services/auth';
+import { AdminUserDetails } from './pages/admin/admin-user-details/admin-user-details';
+
 
 
 
@@ -65,7 +74,13 @@ import { AuthService } from './services/auth';
     InstructorUpload,
     InstructorUploaded,
     InstructorSubmission,
-    InstructorPending
+    InstructorPending,
+    AdminLayout,
+    AdminDashboard,
+    AdminUsers,
+    AdminAssignments,
+    AdminSubmissions,
+    AdminUserDetails
   ],
   imports: [
     BrowserModule,
