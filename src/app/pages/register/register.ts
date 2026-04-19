@@ -20,7 +20,7 @@ export class Register {
   roles = [
     { value: 'student',    label: 'Student',    icon: 'school'  },
     { value: 'instructor', label: 'Instructor', icon: 'person'  },
-    { value: 'admin',      label: 'Admin',      icon: 'shield'  },
+    // { value: 'admin',      label: 'Admin',      icon: 'shield'  },
   ];
 
   constructor(
